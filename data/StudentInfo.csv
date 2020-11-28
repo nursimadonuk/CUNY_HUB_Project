@@ -1,19 +1,19 @@
-﻿school_id,Campus,AvgFinAid($),Size,Total undergraduates,Total graduates,Women (%),Men (%),AvrgAge (All students),AvrgAge (Full Time),Part Time Students (%),Hispanic/Latino(%),Asian(%),White(%),Black/African American(%),Unknown(%),Two or more races(%),Non-Resident Alien(%),In-State(%),Out of State(%),Student Faculty Ratio,Median-SAT,Admission Type,Admitted Applicants(%)
-1,Baruch College,10615,Large,15482,3197,47,53,23,22,20,26,34,20,9,,2,10,97,3,19,1230,very selective,43
-2,Borough of Manhattan Community College,5850,Large,25500,,57,43,24,22,26,44,11,9,26,,2,7,97,3,22,890,open admission,93
-3,Bronx Community College,5977,Medium,10040,,56,44,28,28,38,62,3,2,28,,1,,99,1,19,,open admission,
-4,Brooklyn College,10322,Medium,14970,2841,57,43,24,22,21,25,21,28,20,,2,3,98,2,16,1130,very selective,45
-5,College of Staten Island,8564,Medium,11700,1082,54,46,22,21,19,27,11,42,14,,2,3,98,2,19,1010,open admission,93
-6,Guttman Community College,4965,Small,995,,53,47,19,,15,58,5,8,28,1,,,98,2,13,,open admission,
-7,Hostos Community College,7211,Medium,7331,,67,33,25,,42,63,3,1,27,5,1,,97,3,25,,open admission,
-8,Hunter College,"8,926",Large,17121,6072,64,36,23,21,19,24,32,28,12,,,5,95,5,13,1260,very selective,35
-9,John Jay College of Criminal Justice,8776,Medium,13746,2134,59,41,23,23,16,44,13,19,20,,,3,97,3,18,990,very selective,41
-10,Kingsborough Community College,4858,Medium,15084,,55,45,23,23,45,17,14,32,33,,,4,99,1,22,,open admission,
-11,LaGuardia Community College,5262,Medium,18285,,42,58,23,23,32,38,20,12,21,,2,7,93,7,21,,open admission,92
-12,Lehman College,9029,Medium,13002,2141,67,33,27,24,32,58,6,5,26,,1,3,99,1,18,1050,very selective,38
-13,Medgar Evers College,8702,Medium,5798,,72,28,27,25,24,14,3,1,63,18,,,99,1,14,840,open admission,90
-14,New York City College of Technology,12818,Large,17036,8,44,56,24,22,34,35,20,10,28,,2,4,97,3,18,930,open admission,77
-15,Queensborough Community College,4734,Medium,14035,,53,47,24,22,33,34,23,11,23,,2,6,98,2,18,,open admission,92
-16,Queens College,5759,Large,16866,,54,46,23,22,21,30,29,23,9,,2,5,99,1,16,1120,very selective,49
-17,The City College of New York,11111,Medium,13221,2458,52,48,27,22,18,38,25,13,15,,2,6,98,2,11,1070,very selective,46
-18,York College,4452,Small,422,84,49,51,21,21,6,21,,55,12,5,,4,35,65,12,1120,somewhat selective,57
+﻿school_id,Campus,AvgFinAid($),College Type,Size,Total undergraduates,Total graduates,Women (%),Men (%),AvrgAge (All students),AvrgAge (Full Time),Part Time Students (%),Hispanic/Latino(%),Asian(%),White(%),Black/African American(%),Unknown(%),Two or more races(%),Non-Resident Alien(%),In-State(%),Out of State(%),Student Faculty Ratio,Median-SAT,Admission Type,Admitted Applicants(%)
+1,Baruch College,10615,Senior Colleges,Large,15482,3197,47,53,23,22,20,26,34,20,9,,2,10,97,3,19,1230,very selective,43
+2,Borough of Manhattan Community College,5850,Community Colleges,Large,25500,,57,43,24,22,26,44,11,9,26,,2,7,97,3,22,890,open admission,93
+3,Bronx Community College,5977,Community Colleges,Medium,10040,,56,44,28,28,38,62,3,2,28,,1,,99,1,19,,open admission,
+4,Brooklyn College,10322,Senior Colleges,Medium,14970,2841,57,43,24,22,21,25,21,28,20,,2,3,98,2,16,1130,very selective,45
+5,College of Staten Island,8564,Comprehensive Colleges,Medium,11700,1082,54,46,22,21,19,27,11,42,14,,2,3,98,2,19,1010,open admission,93
+6,Guttman Community College,4965,Community Colleges,Small,995,,53,47,19,,15,58,5,8,28,1,,,98,2,13,,open admission,
+7,Hostos Community College,7211,Community Colleges,Medium,7331,,67,33,25,,42,63,3,1,27,5,1,,97,3,25,,open admission,
+8,Hunter College,"8,926",Senior Colleges,Large,17121,6072,64,36,23,21,19,24,32,28,12,,,5,95,5,13,1260,very selective,35
+9,John Jay College of Criminal Justice,8776,Senior Colleges,Medium,13746,2134,59,41,23,23,16,44,13,19,20,,,3,97,3,18,990,very selective,41
+10,Kingsborough Community College,4858,Community Colleges,Medium,15084,,55,45,23,23,45,17,14,32,33,,,4,99,1,22,,open admission,
+11,LaGuardia Community College,5262,Community Colleges,Medium,18285,,42,58,23,23,32,38,20,12,21,,2,7,93,7,21,,open admission,92
+12,Lehman College,9029,Senior Colleges,Medium,13002,2141,67,33,27,24,32,58,6,5,26,,1,3,99,1,18,1050,very selective,38
+13,Medgar Evers College,8702,Comprehensive Colleges,Medium,5798,,72,28,27,25,24,14,3,1,63,18,,,99,1,14,840,open admission,90
+14,New York City College of Technology,12818,Comprehensive Colleges,Large,17036,8,44,56,24,22,34,35,20,10,28,,2,4,97,3,18,930,open admission,77
+15,Queensborough Community College,4734,Community Colleges,Medium,14035,,53,47,24,22,33,34,23,11,23,,2,6,98,2,18,,open admission,92
+16,Queens College,5759,Senior Colleges,Large,16866,,54,46,23,22,21,30,29,23,9,,2,5,99,1,16,1120,very selective,49
+17,The City College of New York,11111,Senior Colleges,Medium,13221,2458,52,48,27,22,18,38,25,13,15,,2,6,98,2,11,1070,very selective,46
+18,York College,4452,Senior Colleges,Small,422,84,49,51,21,21,6,21,,55,12,5,,4,35,65,12,1120,somewhat selective,57
