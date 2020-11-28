@@ -1,4 +1,6 @@
 library(shiny)
+library(shinyWidgets)
+library(sqldf)
 
 ui <- navbarPage("CUNYHub",
     tabPanel("Fun Facts",
@@ -52,7 +54,27 @@ ui <- navbarPage("CUNYHub",
                h4(textOutput("credit"))
              )
       
-    )
+    ),
+    navbarMenu("Courses and Majors",
+               tabPanel("Courses",
+                        sidebarPanel(
+                          selectInput("Schools_courses",
+                                      "Choose a school district",
+                                      choices = StudentInfo$Campus),
+                          selectInput("Schools_depts",
+                                      "Choose a department",
+                                      choices = sort(unique(departments$dept_name)))
+                        ),
+                        mainPanel(
+                          tableOutput("courses")
+                          )
+                        
+                        ),
+               
+               tabPanel("Majors")
+               
+               )
+    
 
 )
 
@@ -116,6 +138,31 @@ server <- function(input, output, session) {
   
   expin <- reactive({
     switch(input$Schools_exp,
+           "Baruch College" = 1,
+           "Borough of Manhattan Community College" = 2,
+           "Bronx Community College" = 3,
+           "Brooklyn College" = 4,
+           "College of Staten Island" = 5,
+           "Guttman Community College" = 6,
+           "Hostos Community College" = 7,
+           "Hunter College" = 8,
+           "John Jay College of Criminal Justice" = 9,
+           "Kingsborough Community College" = 10,
+           "LaGuardia Community College" = 11,
+           "Lehman College" = 12,
+           "Medgar Evers College" = 13,
+           "New York City College of Technology" = 14,
+           "Queensborough Community College" = 15,
+           "Queens College" = 16,
+           "The City College of New York" = 17,
+           "York College" = 18
+    )
+  })
+  
+  # ----------------------------------------------------------  
+  
+  crsin <- reactive({
+    switch(input$Schools_courses,
            "Baruch College" = 1,
            "Borough of Manhattan Community College" = 2,
            "Bronx Community College" = 3,
@@ -215,7 +262,7 @@ server <- function(input, output, session) {
   # ----------------------------------------------------------
   
   output$address <- renderText({
-    paste("Adress: ", CUNY_Location$Street[contactin()], " ", 
+    paste("Address: ", CUNY_Location$Street[contactin()], " ", 
           CUNY_Location$City[contactin()], " ",
           CUNY_Location$State[contactin()], " ",
           CUNY_Location$Zip[contactin()])
@@ -361,6 +408,28 @@ server <- function(input, output, session) {
   output$type <- renderText({
     paste("School type:", 
           StudentInfo$`College Type`[datain()])
+  })
+  
+  # ----------------------------------------------------------
+  
+  output$courses <- renderTable({
+    dptId <- 0
+    i <- 1
+    while(i <= length(departments$`dept_id`)) {
+      if(departments$schid[i] == crsin() & departments$dept_name[i] == input$Schools_depts) {
+          dptId <- departments$`dept_id`[i]
+          break
+      }
+      i <- i + 1
+    }
+    
+
+    crs2 <- fn$sqldf("SELECT A.dept_name Department, B.courseno Course, B.coursecr
+                     Credits FROM (SELECT dept_id, dept_name FROM departments WHERE dept_id = '$dptId') A JOIN
+                     (SELECT dept_id, courseno, coursecr FROM courses WHERE dept_id = '$dptId') B ON
+                     A.dept_id = B.dept_id")
+
+    crs2
   })
   
 }
