@@ -66,14 +66,25 @@ ui <- navbarPage("CUNYHub",
                                       choices = sort(unique(departments$dept_name)))
                         ),
                         mainPanel(
-                          tableOutput("courses")
+                          dataTableOutput("courses")
                           )
                         
                         ),
                
-               tabPanel("Majors")
-               
-               )
+               tabPanel("Majors",
+                        sidebarPanel(
+                          selectInput("Schools_d",
+                                      "Choose a Major",
+                                      choices = sort(unique(departments$dept_name)))
+                        ),
+                        mainPanel(
+                          dataTableOutput("departments")
+                        )
+                        )
+    ),
+    tabPanel("Programs"),
+    tabPanel("Faculty"),
+    tabPanel("Compare Schools")
     
 
 )
@@ -412,7 +423,7 @@ server <- function(input, output, session) {
   
   # ----------------------------------------------------------
   
-  output$courses <- renderTable({
+  output$courses <- renderDataTable({
     dptId <- 0
     i <- 1
     while(i <= length(departments$`dept_id`)) {
@@ -424,13 +435,63 @@ server <- function(input, output, session) {
     }
     
 
-    crs2 <- fn$sqldf("SELECT A.dept_name Department, B.courseno Course, B.coursecr
+    crs <- fn$sqldf("SELECT A.dept_name Department, B.courseno Course, B.coursecr
                      Credits FROM (SELECT dept_id, dept_name FROM departments WHERE dept_id = '$dptId') A JOIN
                      (SELECT dept_id, courseno, coursecr FROM courses WHERE dept_id = '$dptId') B ON
                      A.dept_id = B.dept_id")
 
-    crs2
+    crs
   })
+  
+  # ----------------------------------------------------------
+  
+  output$departments <- renderDataTable({
+    dptId <- c()
+    schId <- c()
+    i <- 1
+    while(i < length(departments$dept_id)) {
+      if(departments$dept_name[i] == input$Schools_d) {
+        dptId <- c(dptId, departments$dept_id[i])
+        schId <- c(schId, departments$schid[i])
+      }
+      i <- i + 1
+    }
+    
+    schName <- c()
+    for(j in schId) {
+      schName <- c(schName, CUNY_Location$Campus[j])
+    }
+    
+    numCourses <- c()
+    totCredits <- c()
+    for(k in dptId) {
+      startIndex <- match(k, courses$dept_id)
+      i <- startIndex
+      count <- 0
+      total <- 0
+      while(i <= length(courses$dept_id)) {
+        if(courses$dept_id[i] == k) {
+          count <- count + 1
+          total <- total + courses$coursecr[i]
+        }
+        if(courses$dept_id[i] != k) {
+          i <- length(courses$dept_id)+1
+        }
+        i <- i + 1
+      }
+      numCourses <- c(numCourses, count)
+      totCredits <- c(totCredits, total)
+    }
+    
+    
+    mjrs <- data.frame(School = schName,
+                       `Num of Courses` = numCourses,
+                       `Total Credits` = totCredits)
+    
+    mjrs
+  })
+  
+  # ----------------------------------------------------------
   
 }
 
