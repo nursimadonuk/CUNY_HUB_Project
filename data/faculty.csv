@@ -1,4 +1,4 @@
-factultyId,facultyLast,facultyFirst,facultyRating,facultyEmail,facultyStart
+FactultyId,LastName,FirstName,Rating,Email,StartYear
 1,Gardner,Kevin,3.8,kegardner@email.cuny.edu,2013
 2,Hotzler,Russell K,5,ruhotzler@email.cuny.edu,2002
 3,Schaffler,Mitchell,3.5,mischaffler@email.cuny.edu,2014
@@ -4320,7 +4320,7 @@ factultyId,facultyLast,facultyFirst,facultyRating,facultyEmail,facultyStart
 4319,Espinoza,Kimberly,2.7,kiespinoza@email.cuny.edu,2010
 4320,Ziff,Joshua,3.3,joziff@email.cuny.edu,1995
 4321,Dilchert,Stephan,4.4,stdilchert@email.cuny.edu,1997
-4322,Hohl,E David,4.1,e hohl@email.cuny.edu,2018
+4322,Hohl,E David,4.1,ehohl@email.cuny.edu,2018
 4323,Fisch,Gene S,4.5,gefisch@email.cuny.edu,2020
 4324,Moz,Brenda L,3,brmoz@email.cuny.edu,2008
 4325,Pison,Thomas,2.7,thpison@email.cuny.edu,2013
@@ -4398,7 +4398,7 @@ factultyId,facultyLast,facultyFirst,facultyRating,facultyEmail,facultyStart
 4397,Nair,Ranjit,4,ranair@email.cuny.edu,1996
 4398,Morosse,Mar,4.6,mamorosse@email.cuny.edu,2015
 4399,Radoicic,Rados,3.9,raradoicic@email.cuny.edu,2017
-4400,O'Malley,Rose Patricia,1.8,roo'malley@email.cuny.edu,1997
+4400,O'Malley,Rose Patricia,1.8,roomalley@email.cuny.edu,1997
 4401,Smith,Carly G,2.8,casmith@email.cuny.edu,2005
 4402,Montalvo,Maria,4.2,mamontalvo@email.cuny.edu,2004
 4403,Ennoure,Taoufik,4.3,taennoure@email.cuny.edu,2019
@@ -4577,7 +4577,7 @@ factultyId,facultyLast,facultyFirst,facultyRating,facultyEmail,facultyStart
 4576,Sabban,Ronald,2.4,rosabban@email.cuny.edu,2005
 4577,Applebaum,Miriam,1.6,miapplebaum@email.cuny.edu,2006
 4578,Mathis-Crawford,Verina,4.9,vemathis-crawford@email.cuny.edu,2005
-4579,Heath,J William,2.8,j heath@email.cuny.edu,2004
+4579,Heath,J William,2.8,jheath@email.cuny.edu,2004
 4580,Makar,Ivan V,4.7,ivmakar@email.cuny.edu,2007
 4581,Milton,Suzanne,3.1,sumilton@email.cuny.edu,2020
 4582,Eisenbruch,Laurel,3.2,laeisenbruch@email.cuny.edu,2009
@@ -4597,5 +4597,5 @@ factultyId,facultyLast,facultyFirst,facultyRating,facultyEmail,facultyStart
 4596,Trogan,Christopher R,3.2,chtrogan@email.cuny.edu,1996
 4597,Friedman,Mordechai L,1.1,mofriedman@email.cuny.edu,1999
 4598,Smith,Evan G,1.5,evsmith@email.cuny.edu,2013
-4599,Miller J,Vincent L,2.9,vimiller j@email.cuny.edu,2014
+4599,Miller J,Vincent L,2.9,vimillerj@email.cuny.edu,2014
 4600,Raja,Anita,4.1,anraja@email.cuny.edu,1995

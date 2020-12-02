@@ -1,4 +1,4 @@
-school_id,Campus,Campus Website,Phone Number,Street,City,State,Zip,Latitude,Longitude,Location
+SchoolId,Campus,CampusWebsite,PhoneNumber,Street,City,State,Zip,Latitude,Longitude,Location
 1,Baruch College,http://baruch.cuny.edu,(646) 312-1000,55 Lexington Ave at 24th Street,New York,NY,10010-2313,40.740977,-73.984252,"(40.740977, -73.984252)"
 2,Borough of Manhattan Community College,http://bmcc.cuny.edu,(212) 220-1265,199 Chambers Street,New York,NY,10007-1044,40.717367,-74.012178,"(40.717367, -74.012178)"
 3,Bronx Community College,http://bcc.cuny.edu,(718) 289-5100,2155 University Avenue,Bronx,NY,10453,40.856673,-73.910127,"(40.856673, -73.910127)"
