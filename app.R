@@ -1,36 +1,59 @@
+# Libraries used
 library(shiny)
-library(shinyWidgets)
 library(sqldf)
+library(leaflet)
+library(readr)
 
+
+# Loading data - uncomment lines below to load
+extra <- read_csv("data/extra.csv")
+departments <- read_csv("data/departments.csv")
+depsTaught <- read_csv("data/depsTaught.csv")
+degrees <- read_csv("data/degrees.csv")
+courses <- read_csv("data/courses.csv")
+contact <- read_csv("data/contact.csv")
+honors <- read_csv("data/honors.csv")
+faculty <- read_csv("data/faculty.csv")
+expenses <- read_csv("data/expenses.csv")
+
+
+# User Interface
 ui <- navbarPage("CUNYHub",
     tabPanel("Fun Facts",
-             sidebarPanel(
-               selectInput("Schools_fun", "Choose a school district",
-                           choices = StudentInfo$Campus),
-               h4(textOutput("finaid")),
-               h4(textOutput("size")),
-               h4(textOutput("type")),
-               h4(textOutput("ageall")),
-               h4(textOutput("agefull")),
-               h4(textOutput("part")),
-               h4(textOutput("under")),
-               h4(textOutput("grad")),
-               h4(textOutput("ratio")),
-               h4(textOutput("sat")),
-               h4(textOutput("adtype")),
-               h4(textOutput("adprnt"))
+             fluidRow(
+               column(6,
+                      selectInput("Schools_fun", "Choose a school district",
+                                  choices = contact$Campus),
+                      plotOutput("gender")
+                      ),
+               column(6,
+                      h4(textOutput("finaid")),
+                      h4(textOutput("size")),
+                      h4(textOutput("type")),
+                      h4(textOutput("ageall")),
+                      h4(textOutput("agefull")),
+                      h4(textOutput("part")),
+                      h4(textOutput("under")),
+                      h4(textOutput("grad")),
+                      h4(textOutput("ratio")),
+                      h4(textOutput("sat")),
+                      h4(textOutput("adtype")),
+                      h4(textOutput("adprnt"))
+                      )
              ),
-             
-             mainPanel(
-               plotOutput("gender"),
-               plotOutput("race"),
-               plotOutput("state")
+             fluidRow(
+               column(6,
+                      plotOutput("race")
+                      ),
+               column(6,
+                      plotOutput("state")
+                      )
              )
     ),
     tabPanel("Contact Info",
              sidebarPanel(
                selectInput("Schools_cont", "Choose a school district",
-                           choices = CUNY_Location$Campus)
+                           choices = contact$Campus)
              ),
              mainPanel(
                h3(textOutput("phone")),
@@ -42,7 +65,7 @@ ui <- navbarPage("CUNYHub",
     tabPanel("School Expenses",
              sidebarPanel(
                selectInput("Schools_exp", "Choose a school district",
-                           choices = CUNY_Location$Campus)
+                           choices = contact$Campus)
              ),
              mainPanel(
                h4(textOutput("resident")),
@@ -60,31 +83,78 @@ ui <- navbarPage("CUNYHub",
                         sidebarPanel(
                           selectInput("Schools_courses",
                                       "Choose a school district",
-                                      choices = StudentInfo$Campus),
+                                      choices = contact$Campus),
                           selectInput("Schools_depts",
                                       "Choose a department",
-                                      choices = sort(unique(departments$dept_name)))
+                                      choices = sort(unique(departments$DeptName)))
                         ),
                         mainPanel(
                           dataTableOutput("courses")
                           )
                         
-                        ),
+                ),
                
                tabPanel("Majors",
                         sidebarPanel(
                           selectInput("Schools_d",
                                       "Choose a Major",
-                                      choices = sort(unique(departments$dept_name)))
+                                      choices = sort(unique(departments$DeptName))
+                                      )
                         ),
                         mainPanel(
                           dataTableOutput("departments")
                         )
-                        )
+               )
     ),
-    tabPanel("Programs"),
-    tabPanel("Faculty"),
-    tabPanel("Compare Schools")
+    tabPanel("Programs",
+             fluidPage(
+               dataTableOutput("honors")
+             )
+    ),
+    tabPanel("Faculty",
+             sidebarPanel(
+               selectInput("Schools_f",
+                           "Choose a School District",
+                           choices = contact$Campus
+                           ),
+               selectInput("Depts_f",
+                           "Choose a Department",
+                           choices = sort(unique(departments$DeptName))
+               )
+             ),
+             mainPanel(
+               dataTableOutput("faculty")
+             )
+    ),
+    tabPanel("Compare Schools",
+             fluidRow(
+               column(12,
+                      h3("Choose two school districts to compare them"),
+                      fluidRow(
+                        column(6,
+                               selectInput("Comp1",
+                                           "Choose First School District",
+                                           choices = contact$Campus)
+                        ),
+                        column(width = 6,
+                               selectInput("Comp2",
+                                           "Choose Second School District",
+                                           choices = contact$Campus)
+                        )
+                      )
+               )
+             )
+    ),
+    tabPanel("Available Degrees",
+             sidebarPanel(
+               selectInput("Deg",
+                           "Choose a School District",
+                           choices = contact$Campus),
+             ),
+             mainPanel(
+               dataTableOutput("degrees")
+             )
+             )
     
 
 )
@@ -195,42 +265,145 @@ server <- function(input, output, session) {
     )
   })
   
+  
+  # ----------------------------------------------------------  
+  
+  facin <- reactive({
+    switch(input$Schools_f,
+           "Baruch College" = 1,
+           "Borough of Manhattan Community College" = 2,
+           "Bronx Community College" = 3,
+           "Brooklyn College" = 4,
+           "College of Staten Island" = 5,
+           "Guttman Community College" = 6,
+           "Hostos Community College" = 7,
+           "Hunter College" = 8,
+           "John Jay College of Criminal Justice" = 9,
+           "Kingsborough Community College" = 10,
+           "LaGuardia Community College" = 11,
+           "Lehman College" = 12,
+           "Medgar Evers College" = 13,
+           "New York City College of Technology" = 14,
+           "Queensborough Community College" = 15,
+           "Queens College" = 16,
+           "The City College of New York" = 17,
+           "York College" = 18
+    )
+  })
+  
+  
+  # ----------------------------------------------------------  
+  
+  firstin <- reactive({
+    switch(input$Comp1,
+           "Baruch College" = 1,
+           "Borough of Manhattan Community College" = 2,
+           "Bronx Community College" = 3,
+           "Brooklyn College" = 4,
+           "College of Staten Island" = 5,
+           "Guttman Community College" = 6,
+           "Hostos Community College" = 7,
+           "Hunter College" = 8,
+           "John Jay College of Criminal Justice" = 9,
+           "Kingsborough Community College" = 10,
+           "LaGuardia Community College" = 11,
+           "Lehman College" = 12,
+           "Medgar Evers College" = 13,
+           "New York City College of Technology" = 14,
+           "Queensborough Community College" = 15,
+           "Queens College" = 16,
+           "The City College of New York" = 17,
+           "York College" = 18
+    )
+  })
+  
+  
+  # ----------------------------------------------------------  
+  
+  secindin <- reactive({
+    switch(input$Comp2,
+           "Baruch College" = 1,
+           "Borough of Manhattan Community College" = 2,
+           "Bronx Community College" = 3,
+           "Brooklyn College" = 4,
+           "College of Staten Island" = 5,
+           "Guttman Community College" = 6,
+           "Hostos Community College" = 7,
+           "Hunter College" = 8,
+           "John Jay College of Criminal Justice" = 9,
+           "Kingsborough Community College" = 10,
+           "LaGuardia Community College" = 11,
+           "Lehman College" = 12,
+           "Medgar Evers College" = 13,
+           "New York City College of Technology" = 14,
+           "Queensborough Community College" = 15,
+           "Queens College" = 16,
+           "The City College of New York" = 17,
+           "York College" = 18
+    )
+  })
+  
+  # ----------------------------------------------------------  
+  
+  degin <- reactive({
+    switch(input$Deg,
+           "Baruch College" = 1,
+           "Borough of Manhattan Community College" = 2,
+           "Bronx Community College" = 3,
+           "Brooklyn College" = 4,
+           "College of Staten Island" = 5,
+           "Guttman Community College" = 6,
+           "Hostos Community College" = 7,
+           "Hunter College" = 8,
+           "John Jay College of Criminal Justice" = 9,
+           "Kingsborough Community College" = 10,
+           "LaGuardia Community College" = 11,
+           "Lehman College" = 12,
+           "Medgar Evers College" = 13,
+           "New York City College of Technology" = 14,
+           "Queensborough Community College" = 15,
+           "Queens College" = 16,
+           "The City College of New York" = 17,
+           "York College" = 18
+    )
+  })
+  
   # ---------------------------------------------------------- 
   
   output$gender <- renderPlot({
-    nums_g <- c(StudentInfo$`Women (%)`[datain()],
-              StudentInfo$`Men (%)`[datain()])
-    labs_g <- c(paste("Women ", nums_g[1], "%", sep = ""),
-                paste("Men", nums_g[2] ,"%", sep = ""))
+    nums_g <- c(extra$`Women%`[datain()],
+              extra$`Men%`[datain()])
+    labs_g <- c(paste("Women ", (nums_g[1]*100), "%", sep = ""),
+                paste("Men ", (nums_g[2]*100) ,"%", sep = ""))
     pie(nums_g, labels = labs_g, main = "Pie Chart for Student Gender")
   })
   
   # ----------------------------------------------------------
   
   output$race <- renderPlot({
-    nums_r <- c(StudentInfo$`Hispanic/Latino(%)`[datain()],
-                StudentInfo$`White(%)`[datain()],                
-                StudentInfo$`Black/African American(%)`[datain()]
+    nums_r <- c(extra$`Hispanic/Latino%`[datain()],
+                extra$`White%`[datain()],                
+                extra$`Black/AfricanAmerican%`[datain()]
                 )
-    labs_r = c(paste("Hispanic/Latino ", nums_r[1], "%", sep = ""),
-               paste("White ", nums_r[2], "%", sep = ""),
-               paste("Black/African American ", nums_r[3], "%", sep = "")
+    labs_r = c(paste("Hispanic/Latino ", (nums_r[1]*100), "%", sep = ""),
+               paste("White ", (nums_r[2]*100), "%", sep = ""),
+               paste("Black/African American ", (nums_r[3]*100), "%", sep = "")
                )
-    if(is.na(StudentInfo$`Asian(%)`[datain()]) == F) {
-      nums_r <- c(nums_r, StudentInfo$`Asian(%)`[datain()])
-      labs_r <- c(labs_r, paste("Asian ", tail(nums_r, 1), "%", sep = ""))
+    if(is.na(extra$`Asian%`[datain()]) == F) {
+      nums_r <- c(nums_r, extra$`Asian%`[datain()])
+      labs_r <- c(labs_r, paste("Asian ", (tail(nums_r, 1)*100), "%", sep = ""))
     }
-    if(is.na(StudentInfo$`Unknown(%)`[datain()]) == F) {
-      nums_r <- c(nums_r, StudentInfo$`Unknown(%)`[datain()])
-      labs_r <- c(labs_r, paste("Unknown ", tail(nums_r, 1), "%", sep = ""))
+    if(is.na(extra$`Unknown%`[datain()]) == F) {
+      nums_r <- c(nums_r, extra$`Unknown%`[datain()])
+      labs_r <- c(labs_r, paste("Unknown ", (tail(nums_r, 1)*100), "%", sep = ""))
     }
-    if(is.na(StudentInfo$`Two or more races(%)`[datain()]) == F) {
-      nums_r <- c(nums_r, StudentInfo$`Two or more races(%)`[datain()])
-      labs_r <- c(labs_r, paste("Two or more races ", tail(nums_r, 1), "%", sep = ""))
+    if(is.na(extra$`TwoOrMore%`[datain()]) == F) {
+      nums_r <- c(nums_r, extra$`TwoOrMore%`[datain()])
+      labs_r <- c(labs_r, paste("Two or more races ", (tail(nums_r, 1)*100), "%", sep = ""))
     }
-    if(is.na(StudentInfo$`Non-Resident Alien(%)`[datain()]) == F) {
-      nums_r <- c(nums_r, StudentInfo$`Non-Resident Alien(%)`[datain()])
-      labs_r <- c(labs_r, paste("Non-Resident Alien ", tail(nums_r, 1), "%", sep = ""))
+    if(is.na(extra$`NonResidentAlien%`[datain()]) == F) {
+      nums_r <- c(nums_r, extra$`NonResidentAlien%`[datain()])
+      labs_r <- c(labs_r, paste("Non-Resident Alien ", (tail(nums_r, 1)*100), "%", sep = ""))
     }
     
     pie(nums_r, labels = labs_r, main = "Pie Chart for Student Demographics")
@@ -239,44 +412,44 @@ server <- function(input, output, session) {
   # ----------------------------------------------------------
   
   output$state <- renderPlot({
-    nums_s <- c(StudentInfo$`In-State(%)`[datain()], 
-                StudentInfo$`Out of State(%)`[datain()])
-    labs_s <- c(paste("In-state ", nums_s[1], "%", sep = ""), 
-                paste("Out of state ", nums_s[2], "%", sep = ""))
+    nums_s <- c(extra$`InState%`[datain()], 
+                extra$`OutOfState%`[datain()])
+    labs_s <- c(paste("In-state ", (nums_s[1]*100), "%", sep = ""), 
+                paste("Out of state ", (nums_s[2]*100), "%", sep = ""))
     pie(nums_s, labels = labs_s, main = "Pie Chart for Student State")
   })
   
   # ----------------------------------------------------------
   
   output$ageall <- renderText({
-    paste("Average age of all students: ", StudentInfo$`AvrgAge (All students)`[datain()])
+    paste("Average age of all students: ", extra$`AvrgAgeAll`[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$agefull <- renderText({
-    paste("Average age of full-time students: ", StudentInfo$`AvrgAge (Full Time)`[datain()])
+    paste("Average age of full-time students: ", extra$`AvrgAgeFull`[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$phone <- renderText({
-    paste("Phone number: ", CUNY_Location$`Phone Number`[contactin()])
+    paste("Phone number: ", contact$`PhoneNumber`[contactin()])
   })
   
   # ----------------------------------------------------------
   
   output$website <- renderUI({
-    a("Click here for the school website", href = CUNY_Location$`Campus Website`[contactin()])
+    a("Click here for the school website", href = contact$`CampusWebsite`[contactin()])
   })
   
   # ----------------------------------------------------------
   
   output$address <- renderText({
-    paste("Address: ", CUNY_Location$Street[contactin()], " ", 
-          CUNY_Location$City[contactin()], " ",
-          CUNY_Location$State[contactin()], " ",
-          CUNY_Location$Zip[contactin()])
+    paste("Address: ", contact$Street[contactin()], " ", 
+          contact$City[contactin()], " ",
+          contact$State[contactin()], " ",
+          contact$Zip[contactin()])
     
   })
   
@@ -285,9 +458,9 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     m <- leaflet() %>%
       addTiles() %>%
-      addMarkers(lng = CUNY_Location$Longitude[contactin()], 
-                 lat = CUNY_Location$Latitude[contactin()],
-                 popup = CUNY_Location$Campus[contactin()])
+      addMarkers(lng = contact$Longitude[contactin()], 
+                 lat = contact$Latitude[contactin()],
+                 popup = contact$Campus[contactin()])
         
   })
   
@@ -295,7 +468,7 @@ server <- function(input, output, session) {
   
   output$resident <- renderText({
     paste("Average residency expenses: ", 
-          school_expenses$reident[expin()], "$", sep = "")
+          expenses$Resident[expin()], "$", sep = "")
     
   })
   
@@ -303,7 +476,7 @@ server <- function(input, output, session) {
   
   output$transp <- renderText({
     paste("Average transportation expenses: ", 
-          school_expenses$trsp[expin()], "$", sep = "")
+          expenses$Transp[expin()], "$", sep = "")
     
   })
   
@@ -311,7 +484,7 @@ server <- function(input, output, session) {
   
   output$book <- renderText({
     paste("Average books and supplies expenses: ", 
-          school_expenses$bookspl[expin()], "$", sep = "")
+          expenses$BookSpl[expin()], "$", sep = "")
     
   })
   
@@ -319,7 +492,7 @@ server <- function(input, output, session) {
   
   output$lunch <- renderText({
     paste("Average lunch expenses: ", 
-          school_expenses$lunch[expin()], "$", sep = "")
+          expenses$Lunch[expin()], "$", sep = "")
     
   })
   
@@ -327,7 +500,7 @@ server <- function(input, output, session) {
   
   output$personal <- renderText({
     paste("Average personal expenses: ", 
-          school_expenses$prsnl[expin()], "$", sep = "")
+          expenses$Prsnl[expin()], "$", sep = "")
     
   })
   
@@ -335,7 +508,7 @@ server <- function(input, output, session) {
   
   output$room <- renderText({
     paste("Average room and boarding expenses: ", 
-          school_expenses$rmbrd[expin()], "$", sep = "")
+          expenses$RoomBrd[expin()], "$", sep = "")
     
   })
   
@@ -343,7 +516,7 @@ server <- function(input, output, session) {
   
   output$credit <- renderText({
     paste("Average cost per credit: ", 
-          school_expenses$prcrdt[expin()], "$", sep = "")
+          expenses$PerCr[expin()], "$", sep = "")
     
   })
   
@@ -351,21 +524,21 @@ server <- function(input, output, session) {
   
   output$under <- renderText({
     paste("Total undergraduages:", 
-          StudentInfo$`Total undergraduates`[datain()])
+          extra$TotalUndergraduates[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$grad <- renderText({
     paste("Total graduages:", 
-          StudentInfo$`Total graduates`[datain()])
+          extra$TotalGraduates[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$ratio <- renderText({
     paste("Student to faculty ratio: ", 
-          StudentInfo$`Student Faculty Ratio`[datain()],
+          extra$StudentFacultyRatio[datain()],
           ":1", sep = "")
   })
   
@@ -373,21 +546,21 @@ server <- function(input, output, session) {
   
   output$sat <- renderText({
     paste("Median SAT score:", 
-          StudentInfo$`Median-SAT`[datain()])
+          extra$MedianSAT[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$adtype <- renderText({
     paste("Admission type:", 
-          StudentInfo$`Admission Type`[datain()])
+          extra$AdmissionType[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$adprnt <- renderText({
     paste("Admitted applicants: ", 
-          StudentInfo$`Admitted Applicants(%)`[datain()],
+          extra$`AdmittedApplicants%`[datain()],
           "%", sep = "")
   })
   
@@ -395,7 +568,7 @@ server <- function(input, output, session) {
   
   output$finaid <- renderText({
     paste("Average financial aid package: ", 
-          StudentInfo$`AvgFinAid($)`[datain()],
+          extra$AvgFinAid[datain()],
           "$", sep = "")
   })
   
@@ -403,14 +576,14 @@ server <- function(input, output, session) {
   
   output$size <- renderText({
     paste("School size:", 
-          StudentInfo$Size[datain()])
+          extra$Size[datain()])
   })
   
   # ----------------------------------------------------------
   
   output$part <- renderText({
     paste("Part time students: ", 
-          StudentInfo$`Part Time Students (%)`[datain()],
+          extra$`PartTime%`[datain()],
           "%", sep = "")
   })
   
@@ -418,7 +591,7 @@ server <- function(input, output, session) {
   
   output$type <- renderText({
     paste("School type:", 
-          StudentInfo$`College Type`[datain()])
+          extra$Type[datain()])
   })
   
   # ----------------------------------------------------------
@@ -426,19 +599,19 @@ server <- function(input, output, session) {
   output$courses <- renderDataTable({
     dptId <- 0
     i <- 1
-    while(i <= length(departments$`dept_id`)) {
-      if(departments$schid[i] == crsin() & departments$dept_name[i] == input$Schools_depts) {
-          dptId <- departments$`dept_id`[i]
+    while(i <= length(departments$DeptId)) {
+      if(departments$SchoolId[i] == crsin() & departments$DeptName[i] == input$Schools_depts) {
+          dptId <- departments$DeptId[i]
           break
       }
       i <- i + 1
     }
     
 
-    crs <- fn$sqldf("SELECT A.dept_name Department, B.courseno Course, B.coursecr
-                     Credits FROM (SELECT dept_id, dept_name FROM departments WHERE dept_id = '$dptId') A JOIN
-                     (SELECT dept_id, courseno, coursecr FROM courses WHERE dept_id = '$dptId') B ON
-                     A.dept_id = B.dept_id")
+    crs <- fn$sqldf("SELECT A.DeptName Department, B.CourseNo Course, B.CourseCr
+                     Credits FROM (SELECT DeptId, DeptName FROM departments WHERE DeptId = '$dptId') A JOIN
+                     (SELECT DeptId, CourseNo, CourseCr FROM courses WHERE DeptId = '$dptId') B ON
+                     A.DeptId = B.DeptId")
 
     crs
   })
@@ -448,34 +621,34 @@ server <- function(input, output, session) {
   output$departments <- renderDataTable({
     dptId <- c()
     schId <- c()
-    i <- 1
-    while(i < length(departments$dept_id)) {
-      if(departments$dept_name[i] == input$Schools_d) {
-        dptId <- c(dptId, departments$dept_id[i])
-        schId <- c(schId, departments$schid[i])
+    i<- 1
+    while(i <= length(departments$DeptId)) {
+      if(departments$DeptName[i] == input$Schools_d) {
+        dptId <- c(dptId, departments$DeptId[i])
+        schId <- c(schId, departments$SchoolId[i])
       }
       i <- i + 1
     }
     
     schName <- c()
     for(j in schId) {
-      schName <- c(schName, CUNY_Location$Campus[j])
+      schName <- c(schName, contact$Campus[j])
     }
     
     numCourses <- c()
     totCredits <- c()
     for(k in dptId) {
-      startIndex <- match(k, courses$dept_id)
+      startIndex <- match(k, courses$DeptId)
       i <- startIndex
       count <- 0
       total <- 0
-      while(i <= length(courses$dept_id)) {
-        if(courses$dept_id[i] == k) {
+      while(i <= length(courses$DeptId)) {
+        if(courses$DeptId[i] == k) {
           count <- count + 1
-          total <- total + courses$coursecr[i]
+          total <- total + courses$CourseCr[i]
         }
-        if(courses$dept_id[i] != k) {
-          i <- length(courses$dept_id)+1
+        if(courses$DeptId[i] != k) {
+          i <- length(courses$DeptId)+1
         }
         i <- i + 1
       }
@@ -484,15 +657,111 @@ server <- function(input, output, session) {
     }
     
     
+    # returns a list of vectors. Each vector has the indexes of the 
+    # appearances of the elements in dptId in depsTaught$DeptId.
+    facId <- lapply(dptId, function(x) which(depsTaught$DeptId %in% x)) 
+    
+    factIds <- list()
+    
+    # goes through each vector in the list
+    # facId has a length equal to the length of dptId
+    # each vector in facId has a length equal to the # of
+    # occurrences of the corresponding department ID
+    for(vec in facId) {
+      i <- 1
+      x <- c()
+      # goes through the elements of the vector
+      # each element represents an index
+      # replace each element with the corresponding faculty Id
+      while(i <= length(vec)) {
+        x <- c(x, depsTaught$FacultyId[vec[i]])
+        i <- i+1
+      }
+      factIds[[length(factIds)+1]] <- x
+    }
+
+    # now the vectors in facId have the faculty IDs 
+    
+    factRats <- list()
+    
+    # go through the vectors in facId and replace with 
+    # the rating corresponding to the faculty ID
+    for(facs in facId) {
+      i <- 1
+      y <- c()
+      while(i <= length(facs)) {
+        y <- c(y, faculty$Rating[facs[i]])
+        i <- i+1
+      }
+      factRats[[length(factRats)+1]] <- y
+    }
+    
+    myMean <- function(x) {
+      sum <- 0
+      count <- 0
+      for(item in x) {
+        if(is.na(item) == F) {
+          sum<-sum+ as.numeric(item)
+          count <- count +1
+        }
+        
+      }
+      return(sum/count)
+    }
+    
+    ratings <- c()
+    i <- 1
+    while(i <= length(factRats)) {
+      # need to double check this
+      ratings <- c(ratings, myMean(factRats[[i]]))
+      i <- i+1
+    }
+    
     mjrs <- data.frame(School = schName,
                        `Num of Courses` = numCourses,
-                       `Total Credits` = totCredits)
+                       `Total Credits` = totCredits,
+                       `Avg Faculty Rating` = ratings)
     
+    
+    
+
     mjrs
+    
   })
   
   # ----------------------------------------------------------
   
+  output$honors <- renderDataTable({
+    honrs <- fn$sqldf("SELECT contact.Campus Campus, honors.HonorsProgram Program, honors.Link Link FROM 
+                      contact JOIN honors ON contact.SchoolId = honors.SchoolId")
+    
+    honrs
+  })
+  
+  # ----------------------------------------------------------
+  
+  output$faculty <- renderDataTable({
+    schid <- facin()
+    dptid <- input$Depts_f
+    facty <- fn$sqldf("SELECT faculty.LastName Last_Name, faculty.FirstName First_Name, faculty.Rating Rating,
+                      faculty.Email Email, faculty.StartYear CUNY_Start_Year FROM faculty JOIN (SELECT * FROM 
+                      depsTaught WHERE DeptId=(SELECT DeptId FROM departments WHERE SchoolId='$schid' AND 
+                      DeptName='$dptid')) A ON faculty.FacultyId = A.FacultyId")
+    
+    
+    facty
+  })
+  
+  # ----------------------------------------------------------
+  
+  output$degrees <- renderDataTable({
+    schid <- degin()
+    fn$sqldf("SELECT contact.Campus Campus, degrees.ProgramName Program, degrees.AwardName Degree,
+             degrees.CIP201TITLESHORT Title FROM degrees JOIN 
+             contact ON contact.SchoolId=degrees.SchoolId AND degrees.SchoolId='$schid'")
+  })
+  
+ 
 }
 
 shinyApp(ui = ui, server = server)
