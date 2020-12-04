@@ -1,4 +1,4 @@
-FactultyId,LastName,FirstName,Rating,Email,StartYear
+FacultyId,LastName,FirstName,Rating,Email,StartYear
 1,Gardner,Kevin,3.8,kegardner@email.cuny.edu,2013
 2,Hotzler,Russell K,5,ruhotzler@email.cuny.edu,2002
 3,Schaffler,Mitchell,3.5,mischaffler@email.cuny.edu,2014
