@@ -20,33 +20,34 @@ expenses <- read_csv("data/expenses.csv")
 # User Interface
 ui <- navbarPage("CUNYHub",
     tabPanel("Fun Facts",
+             fluidRow(column(4, wellPanel(selectInput("Schools_fun", "Choose a school district",
+                                            choices = contact$Campus)))),
              fluidRow(
                column(6,
-                      selectInput("Schools_fun", "Choose a school district",
-                                  choices = contact$Campus),
-                      plotOutput("gender")
-                      ),
+                      h4(style="text-align: center;", textOutput("finaid")),
+                      h4(style="text-align: center;", textOutput("size")),
+                      h4(style="text-align: center;", textOutput("type")),
+                      h4(style="text-align: center;", textOutput("ageall")),
+                      h4(style="text-align: center;", textOutput("agefull")),
+                      h4(style="text-align: center;", textOutput("part")),
+                      h4(style="text-align: center;", textOutput("under")),
+                      h4(style="text-align: center;", textOutput("grad")),
+                      h4(style="text-align: center;", textOutput("ratio")),
+                      h4(style="text-align: center;", textOutput("sat")),
+                      h4(style="text-align: center;", textOutput("adtype")),
+                      h4(style="text-align: center;", textOutput("adprnt"))),
                column(6,
-                      h4(textOutput("finaid")),
-                      h4(textOutput("size")),
-                      h4(textOutput("type")),
-                      h4(textOutput("ageall")),
-                      h4(textOutput("agefull")),
-                      h4(textOutput("part")),
-                      h4(textOutput("under")),
-                      h4(textOutput("grad")),
-                      h4(textOutput("ratio")),
-                      h4(textOutput("sat")),
-                      h4(textOutput("adtype")),
-                      h4(textOutput("adprnt"))
-                      )
-             ),
+                      wellPanel(
+                        plotOutput("gender"))
+             )),
              fluidRow(
                column(6,
-                      plotOutput("race")
+                      wellPanel(
+                        plotOutput("race"))
                       ),
                column(6,
-                      plotOutput("state")
+                      wellPanel(
+                        plotOutput("state"))
                       )
              )
     ),
@@ -68,14 +69,29 @@ ui <- navbarPage("CUNYHub",
                            choices = contact$Campus)
              ),
              mainPanel(
-               h4(textOutput("resident")),
-               h4(textOutput("transp")),
-               h4(textOutput("books")),
-               h4(textOutput("lunch")),
-               h4(textOutput("personal")),
-               h4(textOutput("room")),
-               h4(textOutput("credit"))
-             )
+               fluidRow(
+                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1517963140-f60c9eceb504?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80)",
+                  h4(style="text-align: center; color:fuchsia", textOutput("resident")))), 
+                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1555124618-81b95d0e5892?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)",
+                  h4(style="text-align: center; color:red", textOutput("transp"))))
+               ),
+               fluidRow(
+                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80)",
+                   h4(style="text-align: center; color:teal", textOutput("lunch")))),
+                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1502465771179-51f3535da42c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1649&q=80)",
+                   h4(style="text-align: center; color:fuchsia", textOutput("personal"))))
+               ),
+               fluidRow(
+                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1504390747618-f9ea2a96c487?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1017&q=80https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
+                   h4(style="text-align: center; color:teal", textOutput("room")))),
+                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
+                   h4(style="text-align: center; color:fuchsia", textOutput("credit"))))
+              ),
+               #fluidRow(
+                 #column(6, offset = 3, wellPanel(h4(textOutput("books"))))
+             #)
+             # This last text output doesn't show anything 
+            )
       
     ),
     navbarMenu("Courses and Majors",
