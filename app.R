@@ -18,24 +18,26 @@ expenses <- read_csv("data/expenses.csv")
 
 
 # User Interface
-ui <- navbarPage("CUNYHub",
+ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
+    src = "https://images.unsplash.com/photo-1517416635928-82ef32a975b7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"),
+    navbarPage("CUNYHub",
     tabPanel("Fun Facts",
              fluidRow(column(4, wellPanel(selectInput("Schools_fun", "Choose a school district",
                                             choices = contact$Campus)))),
              fluidRow(
                column(6,
-                      h4(style="text-align: center;", textOutput("finaid")),
-                      h4(style="text-align: center;", textOutput("size")),
-                      h4(style="text-align: center;", textOutput("type")),
-                      h4(style="text-align: center;", textOutput("ageall")),
-                      h4(style="text-align: center;", textOutput("agefull")),
-                      h4(style="text-align: center;", textOutput("part")),
-                      h4(style="text-align: center;", textOutput("under")),
-                      h4(style="text-align: center;", textOutput("grad")),
-                      h4(style="text-align: center;", textOutput("ratio")),
-                      h4(style="text-align: center;", textOutput("sat")),
-                      h4(style="text-align: center;", textOutput("adtype")),
-                      h4(style="text-align: center;", textOutput("adprnt"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("finaid"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("size"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("type"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("ageall"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("agefull"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("part"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("under"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("grad"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("ratio"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("sat"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("adtype"))),
+                      h4(strong(style="text-align: center; color:white", textOutput("adprnt")))),
                column(6,
                       wellPanel(
                         plotOutput("gender"))
@@ -57,9 +59,9 @@ ui <- navbarPage("CUNYHub",
                            choices = contact$Campus)
              ),
              mainPanel(
-               h3(textOutput("phone")),
-               h3(uiOutput("website")),
-               h3(textOutput("address")),
+               h3(strong(style = "color:white;", textOutput("phone"))),
+               h3(strong(uiOutput("website"))),
+               h3(strong(style = "color:white;", textOutput("address"))),
                leafletOutput("map")
              )
     ),
@@ -71,21 +73,21 @@ ui <- navbarPage("CUNYHub",
              mainPanel(
                fluidRow(
                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1517963140-f60c9eceb504?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80)",
-                  h4(style="text-align: center; color:fuchsia", textOutput("resident")))), 
+                  h4(strong(style="text-align: center; color:black", textOutput("resident"))))), 
                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1555124618-81b95d0e5892?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)",
-                  h4(style="text-align: center; color:red", textOutput("transp"))))
+                  h4(strong(style="text-align: center; color:black", textOutput("transp")))))
                ),
                fluidRow(
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80)",
-                   h4(style="text-align: center; color:teal", textOutput("lunch")))),
+                   h4(strong(style="text-align: center; color:black", textOutput("lunch"))))),
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1502465771179-51f3535da42c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1649&q=80)",
-                   h4(style="text-align: center; color:fuchsia", textOutput("personal"))))
+                   h4(strong(style="text-align: center; color:teal", textOutput("personal")))))
                ),
                fluidRow(
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1504390747618-f9ea2a96c487?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1017&q=80https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
-                   h4(style="text-align: center; color:teal", textOutput("room")))),
+                   h4(strong(style="text-align: center; color:teal", textOutput("room"))))),
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
-                   h4(style="text-align: center; color:fuchsia", textOutput("credit"))))
+                   h4(strong(style="text-align: center; color:teal", textOutput("credit")))))
               ),
                #fluidRow(
                  #column(6, offset = 3, wellPanel(h4(textOutput("books"))))
@@ -170,9 +172,17 @@ ui <- navbarPage("CUNYHub",
              mainPanel(
                dataTableOutput("degrees")
              )
-             )
+             ),
+    tabPanel("",
+         title = div(
+           div(
+             id = "img-id",
+             img(style = "height: 50px; position: fixed; right: 0px; top:0px", src = "logo.png")
+           ),
+         )
+         )
     
-
+    )
 )
 
 
