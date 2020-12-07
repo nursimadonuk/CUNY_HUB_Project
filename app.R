@@ -3,6 +3,8 @@ library(shiny)
 library(sqldf)
 library(leaflet)
 library(readr)
+library(shinythemes)
+library(shinyWidgets)
 
 
 # Loading data - uncomment lines below to load
