@@ -80,22 +80,22 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
              ),
              mainPanel(
                fluidRow(
-                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1517963140-f60c9eceb504?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=802&q=80)",
-                  h4(strong(style="text-align: center; color:black", textOutput("resident"))))), 
-                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1555124618-81b95d0e5892?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80)",
-                  h4(strong(style="text-align: center; color:black", textOutput("transp")))))
+                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1429667947446-3c93a979b7e0?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)",
+                  h4(strong(style="text-align: center; color:white", textOutput("resident"))))), 
+                column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1543976405-cb5ee07d221f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80)",
+                  h4(strong(style="text-align: center; color:white", textOutput("transp")))))
                ),
                fluidRow(
-                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80)",
-                   h4(strong(style="text-align: center; color:black", textOutput("lunch"))))),
+                 column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1574008714961-4b091c96e770?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)",
+                   h4(strong(style="text-align: center; color:white", textOutput("lunch"))))),
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1502465771179-51f3535da42c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1649&q=80)",
-                   h4(strong(style="text-align: center; color:teal", textOutput("personal")))))
+                   h4(strong(style="text-align: center; color:white", textOutput("personal")))))
                ),
                fluidRow(
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1504390747618-f9ea2a96c487?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1017&q=80https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
-                   h4(strong(style="text-align: center; color:teal", textOutput("room"))))),
+                   h4(strong(style="text-align: center; color:white", textOutput("room"))))),
                  column(6, wellPanel(style = "height:300px; background-size: cover; background-image: url(https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2849&q=80)",
-                   h4(strong(style="text-align: center; color:teal", textOutput("credit")))))
+                   h4(strong(style="text-align: center; color:white", textOutput("credit")))))
               ),
                #fluidRow(
                  #column(6, offset = 3, wellPanel(h4(textOutput("books"))))
