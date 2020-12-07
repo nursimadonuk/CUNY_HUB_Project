@@ -22,7 +22,13 @@ expenses <- read_csv("data/expenses.csv")
 # User Interface
 ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     src = "https://images.unsplash.com/photo-1517416635928-82ef32a975b7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"),
-    navbarPage("CUNYHub",
+    div(navbarPage(title = div(
+                              div(
+                                id = "img-id",
+                                img(style = "height: 50px; position: fixed; right: 0px; top:0px", src = "logo.png")
+                              ),
+                            ),
+    
     tabPanel("Fun Facts",
              fluidRow(column(4, wellPanel(selectInput("Schools_fun", "Choose a school district",
                                             choices = contact$Campus)))),
@@ -174,17 +180,11 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
              mainPanel(
                dataTableOutput("degrees")
              )
-             ),
-    tabPanel("",
-         title = div(
-           div(
-             id = "img-id",
-             img(style = "height: 50px; position: fixed; right: 0px; top:0px", src = "logo.png")
-           ),
-         )
-         )
+             )
     
-    )
+    
+    ))
+  
 )
 
 
