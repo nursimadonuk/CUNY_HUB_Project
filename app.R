@@ -30,7 +30,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
                             ),
     
     tabPanel("Fun Facts",
-             fluidRow(column(4, wellPanel(selectInput("Schools_fun", "Choose a school district",
+             fluidRow(column(4, wellPanel(selectInput("Schools_fun", strong(style = "color:white;", "Choose a school district"),
                                             choices = contact$Campus)))),
              fluidRow(
                column(6,
@@ -63,7 +63,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     ),
     tabPanel("Contact Info",
              sidebarPanel(
-               selectInput("Schools_cont", "Choose a school district",
+               selectInput("Schools_cont", strong(style = "color:white;", "Choose a school district"),
                            choices = contact$Campus)
              ),
              mainPanel(
@@ -75,7 +75,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     ),
     tabPanel("School Expenses",
              sidebarPanel(
-               selectInput("Schools_exp", "Choose a school district",
+               selectInput("Schools_exp", strong(style = "color:white;", "Choose a school district"),
                            choices = contact$Campus)
              ),
              mainPanel(
@@ -108,10 +108,10 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
                tabPanel("Courses",
                         sidebarPanel(
                           selectInput("Schools_courses",
-                                      "Choose a school district",
+                                      strong(style = "color:white;", "Choose a school district"),
                                       choices = contact$Campus),
                           selectInput("Schools_depts",
-                                      "Choose a department",
+                                      strong(style = "color:white;", "Choose a department"),
                                       choices = sort(unique(departments$DeptName)))
                         ),
                         mainPanel(
@@ -123,7 +123,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
                tabPanel("Majors",
                         sidebarPanel(
                           selectInput("Schools_d",
-                                      "Choose a Major",
+                                      strong(style = "color:white;", "Choose a Major"),
                                       choices = sort(unique(departments$DeptName))
                                       )
                         ),
@@ -140,11 +140,11 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     tabPanel("Faculty",
              sidebarPanel(
                selectInput("Schools_f",
-                           "Choose a School District",
+                           strong(style = "color:white;", "Choose a School District"),
                            choices = contact$Campus
                            ),
                selectInput("Depts_f",
-                           "Choose a Department",
+                           strong(style = "color:white;", "Choose a Department"),
                            choices = sort(unique(departments$DeptName))
                )
              ),
@@ -155,16 +155,16 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     tabPanel("Compare Schools",
              fluidRow(
                column(12,
-                      h3("Choose two school districts to compare them"),
+                      h3(strong(style = "color:white;", "Choose two school districts to compare them")),
                       fluidRow(
                         column(6,
                                selectInput("Comp1",
-                                           "Choose First School District",
+                                           strong(style = "color:white;", "Choose First School District"),
                                            choices = contact$Campus)
                         ),
                         column(width = 6,
                                selectInput("Comp2",
-                                           "Choose Second School District",
+                                           strong(style = "color:white;", "Choose Second School District"),
                                            choices = contact$Campus)
                         )
                       )
@@ -174,7 +174,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     tabPanel("Available Degrees",
              sidebarPanel(
                selectInput("Deg",
-                           "Choose a School District",
+                           strong(style = "color:white;", "Choose a School District"),
                            choices = contact$Campus),
              ),
              mainPanel(
