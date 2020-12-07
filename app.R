@@ -24,8 +24,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
     src = "https://images.unsplash.com/photo-1517416635928-82ef32a975b7?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"),
     div(navbarPage(title = div(
                               div(
-                                id = "img-id",
-                                img(style = "height: 50px; position: fixed; right: 0px; top:0px", src = "logo.png")
+                                "CUNY HUB",img(style = "height: 50px; position: fixed; right: 0px; top:0px", src = "logo.png")
                               ),
                             ),
     
