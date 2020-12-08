@@ -157,7 +157,10 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
                            strong(style = "color:white;", "Choose an Attribute"),
                            choices = c("Average Financal Aid Package",
                                        "Average Age of All Students",
+                                       "Total Number of Students",
                                        "Percentage of Part Time Students",
+                                       "Percentage of Women Students",
+                                       "Percentage of Men Students",
                                        "Percentage of Hispanic/Latino Students",
                                        "Percentage of Black/African American Students",
                                        "Percentage of Asian Students",
@@ -175,7 +178,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
              ),
              mainPanel(
                wellPanel(
-                 plotOutput("Hist")
+                 plotOutput("hist")
                )
              )
     ),
@@ -351,23 +354,11 @@ server <- function(input, output, session) {
            "York College" = 18
     )
   })
+  
+  # ----------------------------------------------------------
+  
   attin <- reactive({
     switch(input$Attributes,
-           "Average Financal Aid Package" = ,
-           "Average Age of All Students",
-           "Percentage of Part Time Students",
-           "Percentage of Hispanic/Latino Students",
-           "Percentage of Black/African American Students",
-           "Percentage of Asian Students",
-           "Percentage of White Students",
-           "Percentage of Two or More Races Students",
-           "Percentage of Non-Resident/Alien Students",
-           "Median SAT Score",
-           "Average Total School Expenses",
-           "Number of Courses",
-           "Average Faculty Quality",
-           "Student to Faculty Ratio",
-           "Number of Degrees Offered"
     )
   })
 
@@ -765,7 +756,180 @@ server <- function(input, output, session) {
              contact ON contact.SchoolId=degrees.SchoolId AND degrees.SchoolId='$schid'")
   })
   
- 
+  # ----------------------------------------------------------
+  
+  output$hist <- renderPlot({
+    
+    if(input$Attributes == "Average Financal Aid Package") {
+      
+      datavector <- extra$AvgFinAid
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Average Age of All Students") {
+      
+      datavector <- extra$AvrgAgeAll
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Part Time Students") {
+      
+      datavector <- extra$`PartTime%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Hispanic/Latino Students") {
+      
+      datavector <- extra$`Hispanic/Latino%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Black/African American Students") {
+      
+      datavector <- extra$`Black/AfricanAmerican%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Asian Students") {
+      
+      datavector <- extra$`Asian%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of White Students") {
+      
+      datavector <- extra$`White%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Two or More Races Students") {
+      
+      datavector <- extra$`TwoOrMore%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Non-Resident/Alien Students") {
+      
+      datavector <- extra$`NonResidentAlien%`
+      schools <- contact$Campus
+      
+      
+    } else if(input$Attributes == "Median SAT Score") {
+      
+      datavector <- extra$MedianSAT
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Average Total School Expenses") {
+      
+      df <- fn$sqldf("SELECT SchoolId, 
+                     Resident+Transp+BookSpl+Lunch+Prsnl+RoomBrd+PerCr
+                     AS Total FROM expenses ORDER BY SchoolId") 
+      datavector <- df$Total
+      schools <- contact$Campus
+      
+      
+    } else if(input$Attributes == "Number of Courses") {
+      
+      df <- fn$sqldf("SELECT schid, count(*) cnt FROM (SELECT 
+                     departments.SchoolId schid, courses.CourseNo 
+                     crs FROM courses JOIN departments ON 
+                     departments.DeptId = courses.DeptId) GROUP BY schid
+                     ORDER BY schid")
+      
+      datavector <- df$cnt
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Average Faculty Quality") {
+      
+      df <- fn$sqldf("SELECT camp, AVG(rating) avg FROM (
+                     SELECT B.camp camp, faculty.Rating rating FROM faculty JOIN 
+                     (SELECT contact.Campus camp, A.factid factid FROM contact JOIN 
+                     (SELECT departments.SchoolId schid, depsTaught.FacultyId factid FROM 
+                     departments JOIN depsTaught ON departments.DeptId = depsTaught.DeptId) A 
+                     ON A.schid = contact.SchoolId) B ON B.factid = faculty.FacultyId) 
+                     GROUP BY camp")
+      
+      
+      
+      
+      schools <- df$camp
+      datavector <- df$avg
+      
+      
+    } else if(input$Attributes == "Student to Faculty Ratio") {
+      
+      datavector <- extra$StudentFacultyRatio
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Number of Degrees Offered") {
+      
+      df <- fn$sqldf("SELECT contact.Campus sch, A.cnt deg FROM contact JOIN
+                     (SELECT SchoolId, count(*) cnt FROM degrees GROUP BY SchoolId) A
+                     ON A.SchoolId = contact.SchoolId")
+      
+      datavector <- df$deg
+      schools <- df$sch
+      
+    } else if(input$Attributes == "Total Number of Students") {
+      
+      datavector <- c()
+      
+      i <- 1
+      while(i <= length(extra$TotalUndergraduates)) {
+        if(is.na(extra$TotalGraduates[i])) {
+          
+          datavector <- c(datavector, extra$TotalUndergraduates[i])
+        } else {
+          
+          total <- extra$TotalUndergraduates[i] + extra$TotalGraduates[i]
+          datavector <- c(datavector, total)
+        }
+        
+        i <- i+1
+      }
+      
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Women Students") {
+      
+      datavector <- extra$`Women%`
+      schools <- contact$Campus
+      
+    } else if(input$Attributes == "Percentage of Men Students") {
+      
+      datavector <- extra$`Men%`
+      schools <- contact$Campus
+      
+    }    
+    
+    # initials <- c()
+    # for(camp in schools) {
+    #  campsplit <- strsplit(camp, "")[[1]]
+    #  res <- campsplit[1]
+    #  i <- 2
+    #  while(i <= length(campsplit)) {
+    #    if(campsplit[i-1] == " ") {
+    #      res <- paste(res, campsplit[i], sep = "")
+    #    }
+    #    i <- i+1
+    #  }
+    #  initials <- c(initials, res)
+    #} 
+    
+    campuses <- c()
+    for(camp in schools) {
+      if(camp == "Borough of Manhattan Community College") {
+        campuses <- c(campuses, "BMCC") 
+      } else {
+        campuses <- c(campuses, camp)
+      }
+    }
+    
+    par(mar=c(4,15,4,4))
+    
+    barplot(datavector,
+            main = paste("Bar Plot for", input$Attributes, "of Schools"),
+            xlab = input$Attributes,
+            names.arg = campuses,
+            col = "darkred",
+            las = 2,
+            horiz = TRUE)
+    
+  })
+
+  
 }
 
 shinyApp(ui = ui, server = server)
