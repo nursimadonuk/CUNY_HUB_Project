@@ -152,21 +152,30 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
              )
     ),
     tabPanel("Compare Schools",
-             fluidRow(
-               column(12,
-                      h3(strong(style = "color:white;", "Choose two school districts to compare them")),
-                      fluidRow(
-                        column(6,
-                               selectInput("Comp1",
-                                           strong(style = "color:white;", "Choose First School District"),
-                                           choices = contact$Campus)
-                        ),
-                        column(width = 6,
-                               selectInput("Comp2",
-                                           strong(style = "color:white;", "Choose Second School District"),
-                                           choices = contact$Campus)
-                        )
-                      )
+             sidebarPanel(
+               selectInput("Attributes",
+                           strong(style = "color:white;", "Choose an Attribute"),
+                           choices = c("Average Financal Aid Package",
+                                       "Average Age of All Students",
+                                       "Percentage of Part Time Students",
+                                       "Percentage of Hispanic/Latino Students",
+                                       "Percentage of Black/African American Students",
+                                       "Percentage of Asian Students",
+                                       "Percentage of White Students",
+                                       "Percentage of Two or More Races Students",
+                                       "Percentage of Non-Resident/Alien Students",
+                                       "Median SAT Score",
+                                       "Average Total School Expenses",
+                                       "Number of Courses",
+                                       "Average Faculty Quality",
+                                       "Student to Faculty Ratio",
+                                       "Number of Degrees Offered"
+                                       )
+                           )
+             ),
+             mainPanel(
+               wellPanel(
+                 plotOutput("Hist")
                )
              )
     ),
@@ -189,7 +198,7 @@ ui <- fluidPage(theme=shinytheme("slate"),setBackgroundImage(
 
 # ----------------------------------------------------------
 # ----------------------------------------------------------
-# ----------------------------------------------------------
+# ----------------------- SERVER ---------------------------
 
 
 server <- function(input, output, session) {
@@ -317,59 +326,7 @@ server <- function(input, output, session) {
            "York College" = 18
     )
   })
-  
-  
-  # ----------------------------------------------------------  
-  
-  firstin <- reactive({
-    switch(input$Comp1,
-           "Baruch College" = 1,
-           "Borough of Manhattan Community College" = 2,
-           "Bronx Community College" = 3,
-           "Brooklyn College" = 4,
-           "College of Staten Island" = 5,
-           "Guttman Community College" = 6,
-           "Hostos Community College" = 7,
-           "Hunter College" = 8,
-           "John Jay College of Criminal Justice" = 9,
-           "Kingsborough Community College" = 10,
-           "LaGuardia Community College" = 11,
-           "Lehman College" = 12,
-           "Medgar Evers College" = 13,
-           "New York City College of Technology" = 14,
-           "Queensborough Community College" = 15,
-           "Queens College" = 16,
-           "The City College of New York" = 17,
-           "York College" = 18
-    )
-  })
-  
-  
-  # ----------------------------------------------------------  
-  
-  secindin <- reactive({
-    switch(input$Comp2,
-           "Baruch College" = 1,
-           "Borough of Manhattan Community College" = 2,
-           "Bronx Community College" = 3,
-           "Brooklyn College" = 4,
-           "College of Staten Island" = 5,
-           "Guttman Community College" = 6,
-           "Hostos Community College" = 7,
-           "Hunter College" = 8,
-           "John Jay College of Criminal Justice" = 9,
-           "Kingsborough Community College" = 10,
-           "LaGuardia Community College" = 11,
-           "Lehman College" = 12,
-           "Medgar Evers College" = 13,
-           "New York City College of Technology" = 14,
-           "Queensborough Community College" = 15,
-           "Queens College" = 16,
-           "The City College of New York" = 17,
-           "York College" = 18
-    )
-  })
-  
+
   # ----------------------------------------------------------  
   
   degin <- reactive({
@@ -394,6 +351,26 @@ server <- function(input, output, session) {
            "York College" = 18
     )
   })
+  attin <- reactive({
+    switch(input$Attributes,
+           "Average Financal Aid Package" = ,
+           "Average Age of All Students",
+           "Percentage of Part Time Students",
+           "Percentage of Hispanic/Latino Students",
+           "Percentage of Black/African American Students",
+           "Percentage of Asian Students",
+           "Percentage of White Students",
+           "Percentage of Two or More Races Students",
+           "Percentage of Non-Resident/Alien Students",
+           "Median SAT Score",
+           "Average Total School Expenses",
+           "Number of Courses",
+           "Average Faculty Quality",
+           "Student to Faculty Ratio",
+           "Number of Degrees Offered"
+    )
+  })
+
   
   # ---------------------------------------------------------- 
   
@@ -587,7 +564,7 @@ server <- function(input, output, session) {
   
   output$adprnt <- renderText({
     paste("Admitted applicants: ", 
-          extra$`AdmittedApplicants%`[datain()],
+          (extra$`AdmittedApplicants%`[datain()]*100),
           "%", sep = "")
   })
   
@@ -610,7 +587,7 @@ server <- function(input, output, session) {
   
   output$part <- renderText({
     paste("Part time students: ", 
-          extra$`PartTime%`[datain()],
+          (extra$`PartTime%`[datain()]*100),
           "%", sep = "")
   })
   
