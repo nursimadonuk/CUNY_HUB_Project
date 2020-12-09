@@ -7,8 +7,4 @@
  - RateMyProfessor Data: https://data.mendeley.com/datasets/fvtfjyvw7d/2
  - CUNY-Honors-Programs: https://www.cuny.edu/admissions/undergraduate/explore/honors/#1439922465771-2ab65e47-f842
  
- ### Data Still Needed:
-  - Majors
-  - Minors
-  - Professors (Professor Ratings Included)
  
