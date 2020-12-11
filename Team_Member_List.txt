@@ -1,0 +1,8 @@
+Team Member List
+--------------------------
+- Jonnathan Brito 
+- Nursima Donuk
+- Alfredo Morales
+
+Github link to the project:
+https://github.com/nursimadonuk/CUNY_HUB_Project
