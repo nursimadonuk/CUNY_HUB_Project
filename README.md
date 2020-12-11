@@ -1,5 +1,11 @@
 # CUNY_HUB_Project
 
+Attending NYC high schools we noticed there isn’t somewhere we can find information on CUNY schools all in one place. 
+
+_It’s hard to find what you’re looking for if you don’t know where to look for it._
+
+This is where we came up with the idea to create a hub for CUNY School information.
+
 ### Useful links:
  - R-Shiny Tutorial: https://shiny.rstudio.com/tutorial/
  - Shiny-Gallery: https://shiny.rstudio.com/gallery/
@@ -7,8 +13,4 @@
  - RateMyProfessor Data: https://data.mendeley.com/datasets/fvtfjyvw7d/2
  - CUNY-Honors-Programs: https://www.cuny.edu/admissions/undergraduate/explore/honors/#1439922465771-2ab65e47-f842
  
- ### Data Still Needed:
-  - Majors
-  - Minors
-  - Professors (Professor Ratings Included)
  
