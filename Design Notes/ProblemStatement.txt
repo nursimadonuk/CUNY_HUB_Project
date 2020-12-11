@@ -1,0 +1,33 @@
+Nursima Donuk, Alfredo Morales, Jonnathan Brito
+CSCI 435: Database Managemant
+Project Statement
+CUNY HUB
+
+A description of our system: 
+The CUNY Hub is a web app that will allow users to surf through the content that a countless amount of incoming college students tend to be unaware of, in an organized manner. 
+Instead of having to search various sites to get the information you need, we will do our best to gather it up for you in the CUNY Hub website.
+
+A list of services provided:
+- Access to a platform where information about CUNY schools are stored.
+- A brief summary about each school, the size, history etc.
+- Location and maps of each school and commuting possibilities.
+- Departments and majors each school provides.Classes offered from each department and if possible their pre-requisites. 
+- Student programs offered at each school. Information about graduate programs available.
+- Average sizes of each class.
+- Professors' contact information and their research interests.
+- Professor ratings will also be available (we might be able to get that data from RateMyProfessors.com, if not we will link each professor with their respective profile page.
+- Professor’s field of study will be available to provide students with a directory of who they ought to seek out for independent studies or internships with in regards to their fields of interest. 
+- Sports teams and student clubs.
+
+Users of our system: 
+CUNY students who want to learn more about their schools. 
+High School students who are interested in attending a CUNY college after graduation. 
+Students who are looking to transfer to a CUNY school. 
+Professors, teachers, parents of students who attend or plan to attend a CUNY school. 
+However anybody is welcome to visit CUNY Hub to be informed about our community.
+
+How will they use -- information users will provide a receive: 
+No login needed. Users could add their zip code and intended major, so they can be given the best fit school for their travel and choice of study, as well as distinct travel methods. 
+The users will be able to search the name of the CUNY school they are interested in, and the system will output information about school SAT scores, acceptance rate, location, departments, popular majors, professors, and students (male to female ratio, diversity) etc depending on what the user is looking for. 
+There will be a section for professors based on the school and later department that they are interested in. 
+The standard class size will also be displayed under the professors according to the classes that they regularly teach.
