@@ -6,6 +6,12 @@ _It’s hard to find what you’re looking for if you don’t know where to look
 
 This is where we came up with the idea to create a hub for CUNY School information.
 
+### How to Run (Ran in R Studio):
+
+ - Open app.R file
+ - Click on Run App button on far right
+
+
 ### Useful links:
  - R-Shiny Tutorial: https://shiny.rstudio.com/tutorial/
  - Shiny-Gallery: https://shiny.rstudio.com/gallery/
